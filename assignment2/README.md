@@ -1,6 +1,6 @@
 # CMPE279 
 ## Assignment 2
-### Jake Ilsoo Kim, Alan Hsueh
+### Ilsoo Kim (Jake), Alan Hsueh
 
 How to run: 
 ```
