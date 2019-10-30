@@ -6,6 +6,7 @@
 #include <netinet/in.h> 
 #include <string.h> 
 #include <sys/wait.h>
+#include <pwd.h>
 #define PORT 8080 
 #define BUF_SIZE 100
 int main(int argc, char const *argv[]) 
@@ -69,9 +70,18 @@ int main(int argc, char const *argv[])
     {
 
         //99 is a super user(root) 
-        if(setuid(99)==-1){ //setuid returns -1 when failure
+    	int status;
+    	uid_t id;
+    	struct passwd *pwd = getpwnam("nobody");
+    	uid_t UserId = pwd->pw_uid;
+
+        //change from setuid(99) to setuid(UserId);
+        if(setuid(UserId)==-1){ //setuid returns -1 when failure
       	perror("failed to set id   ");
-	printf("The user ID is %d not 99 \n", getuid());
+        exit(EXIT_FAILURE);
+	    }else{
+    	   printf("The user ID is %d\n", getuid());
+    	}
 
         char* execbuff[2];
         char fdbuff[30];
@@ -81,14 +91,7 @@ int main(int argc, char const *argv[])
         execbuff[2] = NULL;
         execvp(execbuff[0], execbuff);
 
-        exit(EXIT_FAILURE);
-	}
-	else{
-
-	printf("The user ID is %d\n", getuid());
-	printf("*** Child process is done ***\n");
-	}
-
+        printf("*** Child process is done ***\n");
     }
     else{//Parent Process
         while ((pid = wait(&status)) > 0);
