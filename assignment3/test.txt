@@ -1,1 +1,3 @@
-TESTFILE HELLO MESSAGE! 
+testing.. message1 from test.txt
+testing.. message2 from test.txt
+testing.. message3 from test.txt
