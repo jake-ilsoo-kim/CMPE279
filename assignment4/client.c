@@ -7,7 +7,6 @@
 #include <seccomp.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <sys/prctl.h>
 #define PORT 8080 
    
 int main(int argc, char const *argv[]) 
@@ -18,9 +17,6 @@ int main(int argc, char const *argv[])
     char *hello = "Hello from client"; 
     char buffer[1024] = {0}; 
 
-   prctl(PR_SET_NO_NEW_PRIVS, 1);
-          // ensure no escape is possible via ptrace
-        prctl(PR_SET_DUMPABLE, 0);
     /* Assignment4 - seccomap-bpm */
     scmp_filter_ctx ctx;
     ctx = seccomp_init(SCMP_ACT_KILL);
